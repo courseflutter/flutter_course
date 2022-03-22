@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_4/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  var emailcontroller = TextEditingController();
+  String s = 'ahmad';
 
   @override
   Widget build(BuildContext context) {
+    emailcontroller.text = s;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -30,6 +32,7 @@ class LoginScreen extends StatelessWidget {
                   height: 40,
                 ),
                 TextFormField(
+                  controller: emailcontroller,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
