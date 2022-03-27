@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/register_screen.dart';
+import 'package:flutter_application_4/login_register-messnger/register_screen.dart';
+
+import 'messenger_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   var emailcontroller = TextEditingController();
@@ -62,7 +64,12 @@ class LoginScreen extends StatelessWidget {
                 Container(
                   color: Colors.blue,
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) {
+                        return MessngerScreen();
+                      }));
+                    },
                     child: Center(
                         child: Text(
                       'Login',

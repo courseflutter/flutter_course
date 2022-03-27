@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'messenger_screen.dart';
+
 class RegisterScreen extends StatefulWidget {
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -111,9 +113,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 TextButton(
                     onPressed: () {
-                      if (formkey.currentState!.validate()) {
-                        print('false');
-                      }
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => MessngerScreen()));
                     },
                     child: Container(
                         color: Colors.blue,
