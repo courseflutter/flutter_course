@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BMIResult extends StatelessWidget {
-  bool? isMale;
-  int? age;
-  double? result;
+  bool isMale;
+  int age;
+  double result;
 
-  BMIResult({required isMale, required age, required result});
+  BMIResult({required this.isMale, required this.age, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class BMIResult extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Gender : Male',
+              'Gender : ${isMale ? 'Male' : 'Female'}',
               style: TextStyle(fontSize: 20),
             ),
             Text(
-              'Result : 33',
+              'Result : ${result.round()}',
               style: TextStyle(fontSize: 20),
             ),
             Text(
-              'Age: 25',
+              'Age: ${age}',
               style: TextStyle(fontSize: 20),
             )
           ],

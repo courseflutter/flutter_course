@@ -248,7 +248,7 @@ class _BMIScreenState extends State<BMIScreen> {
                         builder: (_) => BMIResult(
                               isMale: isMale,
                               age: age,
-                              result: result,
+                              result: result as double,
                             )));
               },
               child: Center(child: Text('Calculate')),
