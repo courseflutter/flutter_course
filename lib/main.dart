@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/Animation/animate_align.dart';
+import 'package:flutter_application_4/Animation/animate_container.dart';
+import 'package:flutter_application_4/Animation/animate_test.dart';
+import 'package:flutter_application_4/Animation/tween_animate.dart';
 import 'package:flutter_application_4/bmi_calculator/bmi_result.dart';
 
 import 'bmi_calculator/bmi-screen.dart';
@@ -13,6 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: BMIScreen());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: AnimateAlign());
   }
 }
