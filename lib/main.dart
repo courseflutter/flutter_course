@@ -9,6 +9,7 @@ import 'package:flutter_application_4/teleapp/homescreen.dart';
 
 import 'bmi_calculator/bmi-screen.dart';
 import 'login_register-messnger/login_screen.dart';
+import 'news_app/news_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +20,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomeScreeen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: NewsScreen(),
+      themeMode: ThemeMode.light,
+      darkTheme: ThemeData(
+          scaffoldBackgroundColor: Colors.blueGrey,
+          appBarTheme: AppBarTheme(backgroundColor: Colors.grey[400])),
+      theme: ThemeData(
+          primarySwatch: Colors.orange,
+          textTheme: TextTheme(
+              bodyText1: TextStyle(fontSize: 25, fontWeight: FontWeight.bold))),
+    );
   }
 }
