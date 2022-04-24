@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NewsScreen(),
+      home: HomeScreen(),
       themeMode: ThemeMode.light,
       darkTheme: ThemeData(
           scaffoldBackgroundColor: Colors.blueGrey,
