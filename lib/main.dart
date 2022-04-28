@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/students_widget/animation_controller.dart';
+import 'package:flutter_application_4/students_widget/carouselslider.dart';
 import 'package:flutter_application_4/students_widget/dis.dart';
+import 'package:flutter_application_4/students_widget/dropdownbutton.dart';
+import 'package:flutter_application_4/students_widget/popupmenu.dart';
 import 'package:flutter_application_4/students_widget/wave.dart';
 
 void main() {
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DismissibleApp(),
+      home: Carousels(),
       themeMode: ThemeMode.light,
       darkTheme: ThemeData(
           scaffoldBackgroundColor: Colors.blueGrey,
