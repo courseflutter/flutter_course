@@ -21,12 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List screens = [TasksScreen(), DoneScreen(), ArchivedScreen()];
   List titles = ['Tasks', 'DoneTasks', 'ArchivedTasks'];
+  var taskController = TextEditingController();
+  var timeController = TextEditingController();
+  var dateController = TextEditingController();
+  var formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
         onPressed: () {
-          insertIntoDatabase();
+          openDialouge();
         },
       ),
       appBar: AppBar(
@@ -49,4 +54,69 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  openDialouge() => showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+          title: Text('Add Task'),
+          children: [
+            Form(
+              key: formkey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please put your task';
+                      }
+                    },
+                    controller: taskController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Task'),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please put your time';
+                      }
+                    },
+                    controller: timeController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Time'),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please put your date';
+                      }
+                    },
+                    controller: dateController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), hintText: 'Date'),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        if (formkey.currentState!.validate()) {
+                          insertIntoDatabase(taskController.text,
+                              timeController.text, dateController.text);
+                          Navigator.pop(context);
+                          taskController.text = '';
+                          timeController.text = '';
+                          dateController.text = '';
+                        }
+                      },
+                      child: Text('Add')),
+                ],
+              ),
+            )
+          ],
+          contentPadding: EdgeInsets.all(12),
+        ),
+      );
 }

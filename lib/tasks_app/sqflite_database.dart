@@ -22,20 +22,23 @@ createDatabase() async {
   );
 }
 
-insertIntoDatabase() async {
+insertIntoDatabase(String task, String time, String date) async {
   await database.transaction((txn) async {
     await txn
         .rawInsert(
-            'INSERT INTO Task(task, time, date,status) VALUES("go to gym", "12:56", "20/4/2022","new")')
-        .then((value) => print('inserted $value'))
-        .catchError((error) {
+            'INSERT INTO Task(task, time, date,status) VALUES("$task", "$time", "$date","new")')
+        .then((value) {
+      print('inserted $value');
+      getDatabase(database);
+    }).catchError((error) {
       print(error.toString());
     });
   });
 }
 
+List<Map> tasks = [];
 getDatabase(database) async {
-  List<Map> tasks = await database.rawQuery('SELECT * FROM Task').then((value) {
+  tasks = await database.rawQuery('SELECT * FROM Task').then((value) {
     print(value);
     return value;
   }).catchError((error) {

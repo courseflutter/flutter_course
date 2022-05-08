@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_4/one.dart';
+import 'package:flutter_application_4/students_widget/one.dart';
 
 class popup extends StatefulWidget {
   popup({Key? key}) : super(key: key);
