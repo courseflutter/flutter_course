@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/tasks_app/archivedtasks.dart';
+import 'package:flutter_application_4/tasks_app/cubit&states/cubit.dart';
+import 'package:flutter_application_4/tasks_app/cubit&states/states.dart';
 import 'package:flutter_application_4/tasks_app/donetasks_screen.dart';
 import 'package:flutter_application_4/tasks_app/sqflite_database.dart';
 import 'package:flutter_application_4/tasks_app/tasks_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    createDatabase();
-  }
-
-  int currentIndex = 0;
-  List screens = [TasksScreen(), DoneScreen(), ArchivedScreen()];
+class HomeScreen extends StatelessWidget {
   List titles = ['Tasks', 'DoneTasks', 'ArchivedTasks'];
   var taskController = TextEditingController();
   var timeController = TextEditingController();
@@ -27,35 +15,43 @@ class _HomeScreenState extends State<HomeScreen> {
   var formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          openDialouge();
-        },
-      ),
-      appBar: AppBar(
-        title: Text('${titles[currentIndex]}'),
-      ),
-      body: screens[currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        currentIndex: currentIndex,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
-          BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Done'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.archive_rounded), label: 'Archived')
-        ],
-      ),
+    return BlocProvider(
+      create: (context) => TaskCubit()..createDatabase(),
+      child: BlocConsumer<TaskCubit, TaskStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            var cubit = TaskCubit().get(context);
+            return Scaffold(
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () {
+                  openDialouge(context, cubit);
+                },
+              ),
+              appBar: AppBar(
+                title: Text('${titles[cubit.currentIndex]}'),
+              ),
+              body: cubit.screens[cubit.currentIndex],
+              bottomNavigationBar: BottomNavigationBar(
+                onTap: (index) {
+                  cubit.changeNavbar(index);
+                },
+                currentIndex: cubit.currentIndex,
+                items: [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.task), label: 'Tasks'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.done), label: 'Done'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.archive_rounded), label: 'Archived')
+                ],
+              ),
+            );
+          }),
     );
   }
 
-  openDialouge() => showDialog(
+  openDialouge(context, cubit) => showDialog(
         context: context,
         builder: (context) => SimpleDialog(
           title: Text('Add Task'),
@@ -103,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextButton(
                       onPressed: () {
                         if (formkey.currentState!.validate()) {
-                          insertIntoDatabase(taskController.text,
+                          cubit.insertIntoDatabase(taskController.text,
                               timeController.text, dateController.text);
                           Navigator.pop(context);
                           taskController.text = '';

@@ -32,6 +32,7 @@ dependencies:
   wave: ^0.2.0
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
+  buildcondition: ^0.0.4
 
 
   # The following adds the Cupertino Icons font to your application.
