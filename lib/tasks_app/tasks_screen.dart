@@ -5,6 +5,8 @@ import 'package:flutter_application_4/tasks_app/cubit&states/states.dart';
 import 'package:flutter_application_4/tasks_app/sqflite_database.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'components.dart';
+
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
@@ -17,7 +19,8 @@ class TasksScreen extends StatelessWidget {
           return BuildCondition(
             condition: cubit.task.length != 0,
             builder: (context) => ListView.separated(
-                itemBuilder: (context, index) => taskBuilder(cubit.task[index]),
+                itemBuilder: (context, index) =>
+                    taskBuilder(cubit.task[index], context),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 10,
                     ),
@@ -28,20 +31,4 @@ class TasksScreen extends StatelessWidget {
           );
         });
   }
-
-  Widget taskBuilder(model) => ListTile(
-        leading: CircleAvatar(
-          radius: 25,
-          child: Text(
-            '${model['id']}',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        title: Text(
-          '${model['task']}',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-        ),
-        subtitle: Text('${model['date']}'),
-        trailing: Text('${model['time']}'),
-      );
 }

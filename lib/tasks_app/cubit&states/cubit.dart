@@ -48,7 +48,7 @@ class TaskCubit extends Cubit<TaskStates> {
     await database.transaction((txn) async {
       await txn
           .rawInsert(
-              'INSERT INTO Task(task, time, date,status) VALUES("$task", "$time", "$date","done")')
+              'INSERT INTO Task(task, time, date,status) VALUES("$task", "$time", "$date","new")')
           .then((value) {
         print('inserted $value');
         getDatabase(database: database);
@@ -61,24 +61,47 @@ class TaskCubit extends Cubit<TaskStates> {
 
   List<Map> task = [];
   List donetask = [];
-  List? archivedtask;
+  List archivedtask = [];
   getDatabase({database}) async {
     List<Map> tasks =
         await database.rawQuery('SELECT * FROM Task').then((value) {
       print(value);
       task = [];
+      donetask = [];
+      archivedtask = [];
       value.forEach((element) {
         if (element['status'] == 'new') {
           task.add(element);
         }
         if (element['status'] == 'done') {
           donetask.add(element);
-        } else {
-          archivedtask?.add(element);
+        }
+        if (element['status'] == 'archive') {
+          archivedtask.add(element);
         }
       });
       emit(TaskGetDatabaseState());
       return value;
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  updateTasks({String? status, int? id}) {
+    database.rawUpdate('UPDATE Task SET status = ?  WHERE id = ?',
+        ["$status", "$id"]).then((value) {
+      getDatabase(database: database);
+      emit(TaskUpdateDatabaseState());
+    }).catchError((error) {
+      print(error.toString());
+    });
+  }
+
+  deleteTask(int id) {
+    database.rawDelete('DELETE FROM Task WHERE id = ?', [id]).then((value) {
+      print('${value} deleted');
+      getDatabase(database: database);
+      emit(TaskDeleteDatabaseState());
     }).catchError((error) {
       print(error.toString());
     });

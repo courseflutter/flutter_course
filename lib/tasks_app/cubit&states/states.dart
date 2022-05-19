@@ -9,3 +9,7 @@ class TaskCreateDatabaseState extends TaskStates {}
 class TaskInsertDatabaseState extends TaskStates {}
 
 class TaskGetDatabaseState extends TaskStates {}
+
+class TaskUpdateDatabaseState extends TaskStates {}
+
+class TaskDeleteDatabaseState extends TaskStates {}
